@@ -1,0 +1,975 @@
+/* ============================================================
+   Diario de Estudio — estilos
+   Cuaderno de constancia: papel, tinta y subrayador.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --papel: #e9ece6;
+  --superficie: #fbfcf9;
+  --superficie-suave: #f1f3ee;
+  --tinta: #17231f;
+  --texto: #1b2723;
+  --texto-suave: #5b6862;
+  --borde: #c3ccc6;
+  --borde-control: #7a8880;
+  --acento: #1f5d4a;
+  --resaltado: #f0d34a;
+  --error: #a32a1c;
+  --aviso: #7a4a00;
+  --exito-suave: #e8f0eb;
+  --radio: 12px;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  accent-color: var(--acento);
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Contenido útil para lectores de pantalla, oculto en la página. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+body {
+  margin: 0;
+  padding: 30px 16px 56px;
+  background-color: var(--papel);
+  background-image: radial-gradient(rgba(23, 35, 31, 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+  color: var(--texto);
+  font-family: var(--sans);
+  line-height: 1.5;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Enlace de salto: solo aparece al enfocarlo con el teclado. */
+.saltar {
+  position: absolute;
+  top: -70px;
+  left: 12px;
+  z-index: 10;
+  padding: 10px 16px;
+  color: #f7f5ec;
+  background: var(--tinta);
+  border-radius: 0 0 8px 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.saltar:focus {
+  top: 0;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: grid;
+  gap: 20px;
+}
+
+.aviso-noscript {
+  margin: 0;
+  padding: 12px 14px;
+  color: var(--error);
+  background: #fbe9e6;
+  border: 1px solid var(--error);
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* ---------- Cabecera ---------- */
+.cabecera {
+  padding: 2px 2px 0;
+}
+
+.cabecera h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2rem, 7vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* Trazo de subrayador bajo el título. */
+.cabecera h1::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 5px;
+  margin-top: 12px;
+  background: var(--resaltado);
+  border-radius: 999px;
+}
+
+.subtitulo {
+  margin: 10px 0 0;
+  color: var(--texto-suave);
+  font-size: 0.95rem;
+}
+
+/* ---------- Tarjeta de racha ---------- */
+.racha {
+  padding: 24px 20px 22px;
+  border-radius: 16px;
+  background: var(--tinta);
+  color: #f5f2e7;
+  box-shadow: 0 12px 28px rgba(23, 35, 31, 0.18);
+}
+
+.racha__titulo {
+  margin: 0 0 18px;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: rgba(245, 242, 231, 0.78);
+}
+
+.racha__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.racha__stat {
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.racha__stat + .racha__stat {
+  border-left: 1px solid rgba(245, 242, 231, 0.16);
+}
+
+.racha__etiqueta {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(245, 242, 231, 0.76);
+}
+
+.racha__valor {
+  margin: 6px 0 0;
+  font-family: var(--serif);
+  font-size: clamp(2.9rem, 12vw, 3.9rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.racha__icono {
+  font-size: 0.55em;
+  vertical-align: 0.12em;
+}
+
+.racha__valor--mejor {
+  color: var(--resaltado);
+  font-size: clamp(1.9rem, 8.5vw, 2.6rem);
+}
+
+.racha__valor--semana {
+  font-size: clamp(1.4rem, 6.5vw, 1.9rem);
+  letter-spacing: -0.01em;
+}
+
+.racha__detalle {
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  color: rgba(245, 242, 231, 0.74);
+}
+
+/* Fila inferior: minutos de la semana y días del mes. */
+.racha__extras {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(245, 242, 231, 0.16);
+}
+
+.racha__aviso {
+  margin: 20px auto 0;
+  max-width: 38ch;
+  padding-top: 14px;
+  border-top: 1px solid rgba(245, 242, 231, 0.16);
+  font-size: 0.82rem;
+  color: rgba(245, 242, 231, 0.86);
+}
+
+/* ---------- Tarjetas ---------- */
+.tarjeta {
+  padding: 22px 20px;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.tarjeta h2 {
+  margin: 0 0 18px;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+#nueva-sesion:focus-visible,
+#sesiones-titulo:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ---------- Formulario ---------- */
+form {
+  display: grid;
+  gap: 14px;
+}
+
+.formulario__nota {
+  margin: 0 0 12px;
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+/* Con 200 % de zoom sobre 375 px (187,5 px CSS) el ancho intrínseco de los
+   campos del formulario ensancharía la página y provocaría scroll horizontal. */
+#nueva-sesion input {
+  min-width: 0;
+}
+
+.campo {
+  display: grid;
+  gap: 5px;
+}
+
+label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+input {
+  width: 100%;
+  padding: 11px 12px;
+  font: inherit;
+  color: var(--texto);
+  background: var(--superficie-suave);
+  border: 1px solid var(--borde-control);
+  border-radius: 8px;
+}
+
+input::placeholder {
+  color: var(--texto-suave);
+  opacity: 1;
+}
+
+input:focus {
+  outline: 2px solid var(--acento);
+  outline-offset: 1px;
+  background: #ffffff;
+}
+
+input[aria-invalid="true"] {
+  border-color: var(--error);
+  box-shadow: inset 0 0 0 1px var(--error);
+}
+
+.campo__error,
+.error {
+  margin: 0;
+  color: var(--error);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.campo__aviso {
+  margin: 0;
+  color: var(--aviso);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.formulario__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.formulario__acciones .boton {
+  flex: 1 1 170px;
+}
+
+/* Botones: los estilos base no arrastran relleno ni color a otros botones. */
+button {
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.boton {
+  min-height: 46px;
+  padding: 12px 18px;
+  font-weight: 600;
+  color: #f7f5ec;
+  background: var(--tinta);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+
+.boton:hover {
+  background: var(--acento);
+}
+
+.boton:active {
+  transform: translateY(1px);
+}
+
+.boton:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.boton-secundario {
+  min-height: 40px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--acento);
+  background: transparent;
+  border: 1px solid var(--borde-control);
+  border-radius: 8px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.boton-secundario:hover {
+  background: var(--superficie-suave);
+  border-color: var(--acento);
+}
+
+.boton-secundario:disabled {
+  color: var(--texto-suave);
+  cursor: default;
+  opacity: 0.75;
+}
+
+.boton-en-linea {
+  min-height: 32px;
+  padding: 4px 10px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 2px;
+}
+
+/* Confirmación visible y anunciada al guardar. */
+.confirmacion {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  color: var(--texto);
+  background: var(--exito-suave);
+  border-left: 3px solid var(--acento);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.86rem;
+}
+
+/* ---------- Sesiones ---------- */
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sesion {
+  display: grid;
+  gap: 8px;
+  padding: 13px 0;
+  border-top: 1px solid var(--borde);
+}
+
+.lista .sesion:first-child {
+  padding-top: 2px;
+  border-top: none;
+}
+
+.sesion__principal {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sesion__info {
+  min-width: 0;
+}
+
+.sesion__tema {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.sesion__fecha {
+  margin: 3px 0 0;
+  font-size: 0.76rem;
+  color: var(--texto-suave);
+}
+
+.sesion__programada {
+  display: inline-block;
+  padding: 1px 6px;
+  color: var(--tinta);
+  background: var(--resaltado);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.sesion__minutos {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--acento);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.sesion__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sesion__accion {
+  min-height: 32px;
+  padding: 4px 10px;
+  color: var(--texto-suave);
+  background: transparent;
+  border: 1px solid var(--borde-control);
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.sesion__accion:hover {
+  color: var(--acento);
+  background: var(--superficie-suave);
+  border-color: var(--acento);
+}
+
+.sesion__accion[data-accion="borrar"]:hover {
+  color: var(--error);
+  border-color: var(--error);
+}
+
+.vacio {
+  margin: 2px 0 0;
+  color: var(--texto-suave);
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  text-align: center;
+}
+
+.lista__estado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  background: var(--superficie-suave);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  font-size: 0.84rem;
+}
+
+.lista__cuenta {
+  margin: 0 0 10px;
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+}
+
+.lista__pie {
+  margin-top: 14px;
+}
+
+.lista__aviso {
+  margin: 12px 0 0;
+  color: var(--texto-suave);
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+/* ---------- Mapa de calor ---------- */
+.heatmap h2 {
+  margin-bottom: 12px;
+}
+
+.heatmap__scroll {
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.heatmap__scroll:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.heatmap__table {
+  width: 100%;
+  min-width: min(276px, 100%);
+  border-collapse: separate;
+  border-spacing: 2px;
+  table-layout: fixed;
+}
+
+.heatmap__corner,
+.heatmap__weekday {
+  width: 10px;
+  padding: 0;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  text-align: center;
+  vertical-align: middle;
+}
+
+.heatmap__month {
+  padding: 0 0 3px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--texto-suave);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.heatmap__day {
+  padding: 0;
+  vertical-align: middle;
+}
+
+/* La celda es el botón (o un hueco decorativo si el día es futuro). */
+.heatmap__cell {
+  --cell-tone: var(--acento);
+  --fill: 0%;
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  aspect-ratio: 1;
+  background: var(--superficie-suave);
+  border: 1px solid var(--borde-control);
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.heatmap__cell:hover {
+  border-color: var(--tinta);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.heatmap__cell:active {
+  transform: none;
+}
+
+/* Foco: amarillo con un borde oscuro para que se vea sobre cualquier nivel. */
+.heatmap__cell:focus-visible {
+  outline: 2px solid var(--resaltado);
+  outline-offset: 1px;
+  box-shadow: 0 0 0 1px var(--tinta);
+}
+
+/* Día fijado con clic o toque. */
+.heatmap__cell[aria-pressed="true"] {
+  outline: 2px solid var(--tinta);
+  outline-offset: 1px;
+}
+
+/* Día de hoy: punto amarillo con aro oscuro. */
+.heatmap__cell--today::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 4px;
+  height: 4px;
+  background: var(--resaltado);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--tinta);
+}
+
+.heatmap__cell--future {
+  background: transparent;
+  border-style: dashed;
+  cursor: default;
+  opacity: 0.6;
+}
+
+.heatmap__cell--future:hover {
+  border-color: var(--borde-control);
+  box-shadow: none;
+}
+
+/* El relleno crece con el nivel: segundo canal, independiente del color. */
+.heatmap__fill {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--fill);
+  background: var(--cell-tone);
+}
+
+.heatmap__swatch {
+  --cell-tone: var(--acento);
+  --fill: 0%;
+  position: relative;
+  width: 12px;
+  height: 12px;
+  flex: none;
+  background: var(--superficie-suave);
+  border: 1px solid var(--borde-control);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* Los cuatro tonos superan 3:1 frente al fondo de la celda. */
+.level-1 {
+  --fill: 25%;
+  --cell-tone: #5d8d76;
+}
+
+.level-2 {
+  --fill: 50%;
+  --cell-tone: #3f7a62;
+}
+
+.level-3 {
+  --fill: 75%;
+  --cell-tone: #2f6b55;
+}
+
+.level-4 {
+  --fill: 100%;
+  --cell-tone: var(--acento);
+}
+
+.heatmap__detail {
+  min-height: 1.5em;
+  margin: 12px 0 0;
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.heatmap__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.72rem;
+  color: var(--texto-suave);
+}
+
+.heatmap__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.heatmap__empty {
+  margin: 12px 0 0;
+  color: var(--texto-suave);
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+/* ---------- Objetivo semanal ---------- */
+/* La sección reutiliza .tarjeta; .goal ordena sus piezas en vertical. */
+.goal {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* 6 px + los 12 del gap dejan los 18 px que separan el título en las demás tarjetas. */
+.goal h2 {
+  margin-bottom: 6px;
+}
+
+.goal__status {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Línea de progreso: número, porcentaje y estado pueden pasar de línea. */
+.goal__progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.4em;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+.goal__value {
+  font-size: clamp(1.4rem, 6.5vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.goal__percent {
+  color: var(--acento);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Subrayador amarillo con texto oscuro: nunca solo color. */
+.goal__complete {
+  align-self: center;
+  padding: 1px 8px;
+  color: var(--tinta);
+  background: var(--resaltado);
+  border-radius: 3px 9px 3px 9px;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Pista visible también al 0 %: el borde la dibuja aunque el relleno sea 0. */
+.goal__track {
+  height: 12px;
+  background: var(--superficie-suave);
+  border: 1px solid var(--borde-control);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+/* Ancho real fijado por JS; sin min-width para no inventar progreso. */
+.goal__fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--acento);
+}
+
+.goal__form {
+  margin: 0;
+}
+
+/* El campo y sus contenedores pueden encogerse: con 188 px CSS (200 % de zoom
+   sobre 375 px) el ancho intrínseco del input desbordaría la tarjeta. */
+.goal__form,
+.goal__form .campo,
+.goal__form input {
+  min-width: 0;
+}
+
+.goal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.goal__actions .boton,
+.goal__actions .boton-secundario {
+  flex: 1 1 150px;
+}
+
+.goal__empty {
+  margin: 0;
+  color: var(--texto-suave);
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.goal__notice {
+  margin: 0;
+  color: var(--aviso);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* #goal-alert ya toma color, tamaño y margen de .error. */
+
+/* ---------- Modo de contraste alto (mapa y objetivo) ---------- */
+@media (forced-colors: active) {
+  .heatmap__cell {
+    border: 1px solid CanvasText;
+  }
+
+  .heatmap__fill {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .heatmap__cell--today::after {
+    background: Highlight;
+    box-shadow: 0 0 0 1px CanvasText;
+  }
+
+  .heatmap__cell:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .goal__track {
+    border: 1px solid CanvasText;
+  }
+
+  .goal__fill {
+    background: CanvasText;
+    forced-color-adjust: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --texto-suave: #3f4b46;
+    --borde-control: #4f5c55;
+  }
+}
+
+/* ---------- Móvil ---------- */
+@media (max-width: 480px) {
+  body {
+    padding: 22px 12px 44px;
+  }
+
+  .contenedor {
+    gap: 16px;
+  }
+
+  .racha {
+    padding: 22px 14px 18px;
+  }
+
+  .racha__titulo {
+    margin-bottom: 14px;
+  }
+
+  .racha__stat {
+    padding: 0 8px;
+  }
+
+  .racha__etiqueta {
+    font-size: 0.72rem;
+  }
+
+  .racha__valor--mejor {
+    font-size: clamp(1.6rem, 9vw, 2.1rem);
+  }
+
+  .racha__valor--semana {
+    font-size: clamp(1.2rem, 7.5vw, 1.6rem);
+  }
+
+  .racha__extras {
+    margin-top: 16px;
+    padding-top: 13px;
+  }
+
+  .tarjeta {
+    padding: 18px 14px;
+  }
+
+  /* La cuadrícula gana 10 px por lado para que las celdas lleguen a 24 px. */
+  .heatmap__scroll {
+    margin-inline: -10px;
+  }
+
+  .heatmap__detail {
+    min-height: 3em;
+    font-size: 0.86rem;
+  }
+
+  .sesion {
+    gap: 6px;
+    padding: 12px 0;
+  }
+
+  .formulario__acciones .boton-secundario {
+    flex: 1 1 auto;
+  }
+
+  /* El objetivo ocupa el ancho y deja que el progreso use varias líneas. */
+  .goal {
+    width: 100%;
+  }
+
+  .goal__progress {
+    row-gap: 2px;
+    font-size: 0.98rem;
+  }
+
+  .goal__actions .boton,
+  .goal__actions .boton-secundario {
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 340px) {
+  .heatmap__corner,
+  .heatmap__weekday,
+  .heatmap__month {
+    font-size: 0.62rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boton,
+  .boton-secundario,
+  .sesion__accion,
+  .saltar {
+    transition: none;
+  }
+}

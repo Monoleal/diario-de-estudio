@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diario de Estudio</title>
+  <meta name="description" content="Registra tus sesiones de estudio y mantén viva tu racha.">
+  <meta name="theme-color" content="#e9ece6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317231f'/%3E%3Cpath d='M8 9h16M8 15h16M8 21h9' stroke='%23f5f2e7' stroke-width='2.4' stroke-linecap='round'/%3E%3Crect x='8' y='24' width='11' height='3' rx='1.5' fill='%23f0d34a'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="saltar" href="#nueva-sesion">Saltar a nueva sesión</a>
+
+  <main class="contenedor">
+    <noscript>
+      <p class="aviso-noscript">Este diario necesita JavaScript para guardar y mostrar tus sesiones. Actívalo para poder usarlo.</p>
+    </noscript>
+
+    <header class="cabecera">
+      <h1>Diario de Estudio</h1>
+      <p class="subtitulo">Registra tus sesiones y mantén viva tu racha.</p>
+    </header>
+
+    <section class="racha" aria-labelledby="racha-titulo">
+      <h2 class="racha__titulo" id="racha-titulo">Tu constancia</h2>
+      <div class="racha__stats">
+        <div class="racha__stat">
+          <p class="racha__etiqueta">Racha actual</p>
+          <p class="racha__valor"><span id="racha-numero">0</span> <span class="racha__icono" aria-hidden="true">🔥</span></p>
+          <p class="racha__detalle" id="racha-detalle">0 días seguidos</p>
+        </div>
+        <div class="racha__stat">
+          <p class="racha__etiqueta">Mejor racha</p>
+          <p class="racha__valor racha__valor--mejor"><span id="mejor-racha-numero">0</span> <span class="racha__icono" aria-hidden="true">🏆</span></p>
+          <p class="racha__detalle">récord personal</p>
+        </div>
+        <div class="racha__extras">
+          <div class="racha__stat">
+            <p class="racha__etiqueta">Esta semana</p>
+            <p class="racha__valor racha__valor--semana" id="minutos-semana">0 min</p>
+          </div>
+          <div class="racha__stat">
+            <p class="racha__etiqueta">Este mes</p>
+            <p class="racha__valor racha__valor--semana" id="dias-mes">0 días</p>
+          </div>
+        </div>
+      </div>
+      <p class="racha__aviso" id="racha-aviso" hidden>
+        Hoy aún no has estudiado: la racha sigue viva hasta que acabe el día.
+      </p>
+    </section>
+
+    <section class="tarjeta goal" id="goal" aria-labelledby="goal-title">
+      <h2 id="goal-title">Objetivo semanal</h2>
+
+      <div class="goal__status" id="goal-status" hidden>
+        <p class="goal__progress" id="goal-progress" aria-hidden="true">
+          <span class="goal__value" id="goal-value"></span>
+          <span class="goal__percent" id="goal-percent"></span>
+          <span class="goal__complete" id="goal-complete" hidden>Objetivo cumplido</span>
+        </p>
+        <div class="goal__track" id="goal-track"
+             role="progressbar"
+             aria-label="Progreso del objetivo semanal"
+             aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="">
+          <span class="goal__fill" id="goal-fill" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <p class="goal__empty" id="goal-empty" hidden>Todavía no has fijado un objetivo semanal. Elige cuántos minutos quieres estudiar cada semana.</p>
+      <p class="goal__notice" id="goal-notice" hidden>El objetivo guardado no es válido y se ha ignorado. Fija uno nuevo o quita el valor guardado.</p>
+      <p class="goal__alert error" id="goal-alert" role="alert" hidden></p>
+
+      <form class="goal__form" id="goal-form" novalidate>
+        <div class="campo">
+          <label for="goal-minutes">Minutos por semana</label>
+          <input type="text" id="goal-minutes" name="goal-minutes" inputmode="numeric"
+                 autocomplete="off" aria-describedby="goal-help goal-error">
+          <p class="campo__aviso" id="goal-help">Por ejemplo, 300 minutos son 5 horas.</p>
+          <p class="campo__error" id="goal-error" hidden></p>
+        </div>
+        <div class="goal__actions">
+          <button type="submit" class="boton" id="goal-submit">Fijar objetivo</button>
+          <button type="button" class="boton-secundario" id="goal-remove" hidden>Quitar objetivo</button>
+        </div>
+      </form>
+
+      <p class="goal__confirm confirmacion" id="goal-confirm" aria-hidden="true" hidden></p>
+    </section>
+
+    <section class="tarjeta heatmap" aria-labelledby="heatmap-title">
+      <h2 id="heatmap-title">Constancia de las últimas 12 semanas</h2>
+      <div class="heatmap__scroll" id="heatmap-grid" tabindex="0" role="group" aria-label="Mapa de calor; desplázate en horizontal si hace falta"></div>
+      <p class="heatmap__empty" id="heatmap-empty" hidden>Todavía no hay días estudiados en las últimas 12 semanas. Registra una sesión para empezar.</p>
+      <p class="heatmap__detail" id="heatmap-detail" role="status">Pasa el ratón, toca o usa las flechas para ver el detalle de un día.</p>
+      <ul class="heatmap__legend" aria-label="Leyenda de intensidad">
+        <li class="heatmap__legend-item"><span class="heatmap__swatch" aria-hidden="true"><span class="heatmap__fill"></span></span>Sin sesiones</li>
+        <li class="heatmap__legend-item"><span class="heatmap__swatch level-1" aria-hidden="true"><span class="heatmap__fill"></span></span>1–29 min</li>
+        <li class="heatmap__legend-item"><span class="heatmap__swatch level-2" aria-hidden="true"><span class="heatmap__fill"></span></span>30–59 min</li>
+        <li class="heatmap__legend-item"><span class="heatmap__swatch level-3" aria-hidden="true"><span class="heatmap__fill"></span></span>60–119 min</li>
+        <li class="heatmap__legend-item"><span class="heatmap__swatch level-4" aria-hidden="true"><span class="heatmap__fill"></span></span>120+ min</li>
+      </ul>
+    </section>
+
+    <section class="tarjeta" id="nueva-sesion" aria-labelledby="form-titulo" tabindex="-1">
+      <h2 id="form-titulo">Nueva sesión</h2>
+      <p class="formulario__nota">Todos los campos son obligatorios.</p>
+      <form id="formulario-sesion" novalidate>
+        <div class="campo">
+          <label for="fecha">Fecha</label>
+          <input type="date" id="fecha" name="fecha" required autocomplete="off" aria-describedby="error-fecha aviso-fecha">
+          <p class="campo__error" id="error-fecha" hidden></p>
+          <p class="campo__aviso" id="aviso-fecha" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="tema">Tema</label>
+          <input type="text" id="tema" name="tema" placeholder="Ej. Ecuaciones de segundo grado" maxlength="120" autocomplete="off" required aria-describedby="error-tema">
+          <p class="campo__error" id="error-tema" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label for="minutos">Minutos</label>
+          <input type="number" id="minutos" name="minutos" min="1" max="1440" step="1" inputmode="numeric" placeholder="Ej. 45" autocomplete="off" required aria-describedby="error-minutos">
+          <p class="campo__error" id="error-minutos" hidden></p>
+        </div>
+
+        <p class="error" id="error-general" role="alert" hidden></p>
+
+        <div class="formulario__acciones">
+          <button type="submit" class="boton" id="guardar-sesion">Guardar sesión</button>
+          <button type="button" class="boton-secundario" id="cancelar-edicion" hidden>Cancelar</button>
+        </div>
+      </form>
+
+      <p class="confirmacion" id="confirmacion" hidden>
+        <span id="confirmacion-texto"></span>
+        <span class="visually-hidden" id="confirmacion-extra"></span>
+      </p>
+    </section>
+
+    <section class="tarjeta" aria-labelledby="sesiones-titulo">
+      <h2 id="sesiones-titulo" tabindex="-1">Sesiones</h2>
+
+      <p class="lista__estado" id="lista-estado" hidden>
+        <span id="lista-estado-texto"></span>
+        <button type="button" class="boton-secundario boton-en-linea" id="deshacer-borrado" hidden>Deshacer</button>
+      </p>
+
+      <p class="lista__cuenta" id="lista-cuenta" hidden></p>
+      <ul class="lista" id="lista-sesiones" role="list"></ul>
+      <p class="vacio" id="sin-sesiones">Todavía no hay sesiones. Registra la primera para empezar tu racha.</p>
+
+      <div class="lista__pie" id="lista-pie" hidden>
+        <button type="button" class="boton-secundario" id="mostrar-mas">Mostrar más</button>
+      </div>
+
+      <p class="lista__aviso" id="datos-ignorados" hidden></p>
+    </section>
+
+    <p class="visually-hidden" id="anuncio" role="status"></p>
+  </main>
+
+  <script src="heatmap.js"></script>
+  <script src="goal.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
